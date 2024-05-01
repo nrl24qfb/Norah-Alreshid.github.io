@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Immersive Data Visualization</title>
+
+  <!--  **d3-3d** is meant for 3d visualizations. 
+    **d3-3d** allows the projection of 3d data onto the screen in the webbrowser. 
+    It is specially designed to work with **[d3.js]-->
+  <script src="https://unpkg.com/d3-3d/build/d3-3d.min.js"></script>
+
+  <!--  To use D3.js in the web page, I added a link to the library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <!-- X3DOM (pronounced X-Freedom) is an open-source framework and runtime for 3D graphics on the Web. -->
+  <script src="https://x3dom.org/download/dev/x3dom-full.js"></script>
+  <link rel="stylesheet" href="https://x3dom.org/download/dev/x3dom.css" />
+  
+  <!-- d3-x3d makes it simple to produce 3D data visualisations with minimal code -->
+  <script src="https://raw.githack.com/jamesleesaunders/d3-x3d/master/dist/d3-x3d.js"></script>
+  
+</head>
+
+<body background="background.gif" bgcolor="#000000" text="#ffffff" link="#CDAB7B" vlink="#CDAB7B" alink="#ff0000">
+  <h1>Immersive Data Visualization
+</h1>
+
+
+
+<table border="3" cellpadding="10" cellspacing="2" width="100%">
+
+  <tr><td align="center" colspan="2">
+  
+  <font size="5" face="verdana,arial,helvetica,sans-serif">
+  
+  <b> Data Visualization of Sales of 2021</b>
+  </font>
+  
+  </td></tr>
+  
+  <tr><td align="left" width="20%" valign="top">
+  
+  <font size="2" face="verdana">
+  
+  <a href="index.html"><b>Sales of 2020</b></a>
+  <p>
+  <a href="index1.html"><b>Sales of 2021</b></a>
+  <p>
+  <a href="index2.html"><b>Sales of 2022</b></a>
+  
+  <p>
+  <a href="index3.html"><b>Sales of 2023</b></a>
+  <p>
+  
+  <hr>
+  
+  <p>
+    Name: Norah Alreshidi
+  <p>
+    User Name: nrl24qfb
+  <p>
+  <a href="mailto:nrl24qfb@bangor.ac.uk"><b>Email</b></a>
+  <p>
+  <hr>
+  <p>
+  <a href="https://www.bangor.ac.uk/"><b>Bangor University</b></a>
+  <p>
+  <a href="https://www.bangor.ac.uk/scse"><b>School of Computer Science and Electronic Engineering</b></a>
+  
+  </font>
+  
+  <p>
+  
+  </td><td align="center" valign="top" width="80%">
+  
+  
+  <p>
+  
+  
+  <div id="chartholder" align="center" width="100%"></div>
+
+  <script> const csvUrl = 'Data/Sales2021.csv'
+    
+  // asynchronous code: I used async to to tell it should wait for loading the data using the await
+		const main = async () => {
+
+  // csv data
+    const {
+        csv
+      } = d3;
+
+    const parseRow = (d) => {
+      	obj = {key:d.Product,values: [
+                  { key: "Jan", value: parseInt(d.Jan)},
+                  { key: "Mar", value: parseInt(d.Mar)},
+                  { key: "May", value: parseInt(d.May)},
+                  { key: "Jul", value: parseInt(d.Jul)},
+                  { key: "Sep", value: parseInt(d.Sep)},
+                  { key: "Nov", value: parseInt(d.Nov)}
+                ]
+              }
+        return obj;
+      };
+    
+    var chartHolder = d3.select("#chartholder");
+    chartHolder.attr("style", "height: 620px").attr("style", "width: 820px");
+
+    // Declare the chart component
+    var myChart = d3.x3d.chart.barChartMultiSeries();;
+
+    // Generate some data
+    var myData = d3.x3d.randomData.dataset2();
+    // Attach chart and data to the chartholder
+  	chartHolder.datum(myData).call(myChart);
+
+    const data = await csv(csvUrl,parseRow);
+  	chartHolder.datum(data).call(myChart);
+    };
+		main();    
+    
+  </script>
+
+<p>
+
+  
+</td></tr>
+
+<tr><td align="center" colspan="2">
+  
+  <font size="1" face="verdana,arial,helvetica,sans-serif">
+    Web-based VR application that displays a 3D bar-chart, reproducing physical visualizations using D3.js library to convert a simple dataset CSV object to a NxN matrix, corresponding to the 3D bar arrangement. 
+  </font>
+  
+  </td></tr></table>
+
+
+</body>
+</html>
